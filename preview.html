@@ -1,616 +1,333 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Janji Temu - Kelurahan Gudang</title>
 
-<title>Janji Temu - Kelurahan Gudang</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-<style>
-* {
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
+        body {
+            margin: 0;
+            background: #f2f6f9;
+            color: #333;
+        }
 
-body {
-    margin: 0;
-    background: #f1f5f9;
-    color: #1e293b;
-}
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
 
-/* HEADER */
-.header {
-    background: linear-gradient(135deg, #087f5b, #0b7285);
-    color: white;
-    padding: 35px 20px;
-    text-align: center;
-}
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
 
-.header h1 {
-    margin: 0;
-    font-size: 30px;
-}
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-.header p {
-    margin: 8px 0 0;
-    font-size: 16px;
-}
+        .header h1 {
+            margin: 0;
+            color: #126b9e;
+            font-size: 28px;
+        }
 
-/* CONTAINER */
-.container {
-    max-width: 750px;
-    margin: 30px auto;
-    padding: 0 15px;
-}
+        .header h2 {
+            margin: 8px 0;
+            font-size: 20px;
+            color: #333;
+        }
 
-/* CARD */
-.card {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-}
+        .header p {
+            color: #777;
+            margin-bottom: 0;
+        }
 
-.card h2 {
-    text-align: center;
-    margin-top: 0;
-    color: #087f5b;
-}
+        .form-group {
+            margin-bottom: 18px;
+        }
 
-/* INFO */
-.info {
-    background: #e7f5ef;
-    border-left: 5px solid #087f5b;
-    padding: 15px;
-    margin-bottom: 25px;
-    border-radius: 6px;
-    line-height: 1.6;
-}
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
 
-/* FORM */
-.form-group {
-    margin-bottom: 18px;
-}
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
 
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 7px;
-}
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #126b9e;
+        }
 
-.required {
-    color: red;
-}
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
 
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 15px;
-    outline: none;
-    background: white;
-}
+        .row {
+            display: flex;
+            gap: 15px;
+        }
 
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #087f5b;
-    box-shadow: 0 0 0 2px rgba(8,127,91,0.1);
-}
+        .row .form-group {
+            flex: 1;
+        }
 
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
+        .required {
+            color: red;
+        }
 
-/* TWO COLUMN */
-.row {
-    display: flex;
-    gap: 15px;
-}
+        .info {
+            background: #eef7fc;
+            border-left: 4px solid #126b9e;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
 
-.row .form-group {
-    flex: 1;
-}
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #126b9e;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-/* BUTTON */
-.btn {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    background: #087f5b;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
+        button:hover {
+            background: #0d557e;
+        }
 
-.btn:hover {
-    background: #066b4d;
-}
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #777;
+        }
 
-/* RESULT */
-.result {
-    display: none;
-    margin-top: 25px;
-    padding: 20px;
-    background: #e7f5ef;
-    border-radius: 10px;
-    border: 1px solid #087f5b;
-}
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px auto;
+                padding: 10px;
+            }
 
-.result h3 {
-    color: #087f5b;
-    margin-top: 0;
-}
+            .card {
+                padding: 20px;
+            }
 
-.booking {
-    font-size: 25px;
-    font-weight: bold;
-    color: #d9480f;
-    text-align: center;
-    padding: 10px;
-}
-
-/* FOOTER */
-.footer {
-    text-align: center;
-    padding: 25px;
-    color: #64748b;
-    font-size: 13px;
-}
-
-/* MOBILE */
-@media(max-width: 600px) {
-
-    .header h1 {
-        font-size: 24px;
-    }
-
-    .card {
-        padding: 20px;
-    }
-
-    .row {
-        flex-direction: column;
-        gap: 0;
-    }
-
-}
-</style>
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <h1>JANJI TEMU PELAYANAN</h1>
-    <p>Kelurahan Gudang Kecamatan Bogor Tengah</p>
-</div>
-
-
-<!-- CONTENT -->
 <div class="container">
 
     <div class="card">
 
-        <h2>Formulir Janji Temu</h2>
-
-        <div class="info">
-            Silakan isi data berikut dengan lengkap dan benar.
-            Setelah pengajuan dikirim, Anda akan mendapatkan
-            <b>Nomor Booking</b> untuk melakukan pengecekan janji temu.
+        <div class="header">
+            <h1>JANJI TEMU</h1>
+            <h2>KELURAHAN GUDANG</h2>
+            <p>Kecamatan Bogor Tengah</p>
         </div>
 
+        <div class="info">
+            Silakan isi formulir berikut untuk mengajukan janji temu
+            dengan petugas pelayanan Kelurahan Gudang.
+        </div>
 
         <form id="janjiTemuForm">
 
-            <!-- NAMA -->
             <div class="form-group">
-                <label>
-                    Nama Pemohon <span class="required">*</span>
-                </label>
-
-                <input
-                    type="text"
-                    id="nama"
-                    placeholder="Masukkan nama lengkap"
-                    required>
+                <label>Nama Pemohon <span class="required">*</span></label>
+                <input type="text" name="nama" placeholder="Masukkan nama lengkap" required>
             </div>
 
-
-            <!-- NIK -->
             <div class="form-group">
-                <label>
-                    NIK <span class="required">*</span>
-                </label>
-
-                <input
-                    type="text"
-                    id="nik"
-                    maxlength="16"
-                    inputmode="numeric"
-                    placeholder="Masukkan 16 digit NIK"
-                    required>
+                <label>NIK <span class="required">*</span></label>
+                <input type="text"
+                       name="nik"
+                       placeholder="Masukkan NIK"
+                       maxlength="16"
+                       inputmode="numeric"
+                       required>
             </div>
 
-
-            <!-- HP -->
             <div class="form-group">
-                <label>
-                    Nomor Handphone <span class="required">*</span>
-                </label>
-
-                <input
-                    type="tel"
-                    id="hp"
-                    placeholder="Contoh: 081234567890"
-                    required>
+                <label>No. Handphone <span class="required">*</span></label>
+                <input type="tel"
+                       name="no_hp"
+                       placeholder="Contoh: 081234567890"
+                       required>
             </div>
 
-
-            <!-- ALAMAT -->
             <div class="form-group">
                 <label>Alamat</label>
-
-                <textarea
-                    id="alamat"
-                    placeholder="Masukkan alamat lengkap"></textarea>
+                <textarea name="alamat"
+                          placeholder="Masukkan alamat lengkap"></textarea>
             </div>
 
-
-            <!-- LAYANAN -->
             <div class="form-group">
-                <label>
-                    Jenis Layanan <span class="required">*</span>
-                </label>
+                <label>Layanan yang Dituju <span class="required">*</span></label>
 
-                <select id="layanan" required>
-
-                    <option value="">
-                        -- Pilih Layanan --
-                    </option>
-
-                    <option>
+                <select name="layanan" required>
+                    <option value="">-- Pilih Layanan --</option>
+                    <option value="Administrasi Kependudukan">
                         Administrasi Kependudukan
                     </option>
-
-                    <option>
+                    <option value="Surat Keterangan">
                         Surat Keterangan
                     </option>
-
-                    <option>
-                        Surat Pengantar
-                    </option>
-
-                    <option>
+                    <option value="Ahli Waris">
                         Ahli Waris
                     </option>
-
-                    <option>
+                    <option value="Domisili">
                         Surat Keterangan Domisili
                     </option>
-
-                    <option>
-                        Konsultasi Pelayanan
-                    </option>
-
-                    <option>
+                    <option value="Pelayanan Umum">
                         Pelayanan Umum
                     </option>
-
-                    <option>
+                    <option value="Konsultasi">
+                        Konsultasi
+                    </option>
+                    <option value="Lainnya">
                         Lainnya
                     </option>
-
                 </select>
             </div>
 
-
-            <!-- TANGGAL & JAM -->
             <div class="row">
 
                 <div class="form-group">
-
-                    <label>
-                        Tanggal <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="date"
-                        id="tanggal"
-                        required>
-
+                    <label>Tanggal Janji Temu <span class="required">*</span></label>
+                    <input type="date"
+                           id="tanggal"
+                           name="tanggal"
+                           required>
                 </div>
-
 
                 <div class="form-group">
+                    <label>Jam <span class="required">*</span></label>
 
-                    <label>
-                        Jam <span class="required">*</span>
-                    </label>
-
-                    <select id="jam" required>
-
-                        <option value="">
-                            -- Pilih Jam --
-                        </option>
-
-                        <option>08:00</option>
-                        <option>08:30</option>
-                        <option>09:00</option>
-                        <option>09:30</option>
-                        <option>10:00</option>
-                        <option>10:30</option>
-                        <option>11:00</option>
-                        <option>11:30</option>
-                        <option>13:00</option>
-                        <option>13:30</option>
-                        <option>14:00</option>
-                        <option>14:30</option>
-
+                    <select name="jam" required>
+                        <option value="">-- Pilih Jam --</option>
+                        <option value="08:00">08:00</option>
+                        <option value="08:30">08:30</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
                     </select>
-
                 </div>
 
             </div>
 
-
-            <!-- PETUGAS -->
             <div class="form-group">
+                <label>Nama Petugas yang Dituju</label>
 
-                <label>Petugas yang Dituju</label>
-
-                <select id="petugas">
-
-                    <option value="">
-                        -- Pilih Petugas --
+                <select name="petugas">
+                    <option value="">-- Pilih Petugas --</option>
+                    <option value="Petugas Pelayanan">
+                        Petugas Pelayanan
                     </option>
-
-                    <option>Lurah</option>
-
-                    <option>Sekretaris Kelurahan</option>
-
-                    <option>Petugas Pelayanan</option>
-
-                    <option>Petugas Administrasi</option>
-
+                    <option value="Sekretaris Kelurahan">
+                        Sekretaris Kelurahan
+                    </option>
+                    <option value="Lurah">
+                        Lurah
+                    </option>
                 </select>
-
             </div>
 
-
-            <!-- KEPERLUAN -->
             <div class="form-group">
+                <label>Keperluan / Catatan <span class="required">*</span></label>
 
-                <label>
-                    Keperluan <span class="required">*</span>
-                </label>
-
-                <textarea
-                    id="keperluan"
-                    placeholder="Tuliskan keperluan janji temu"
-                    required></textarea>
-
+                <textarea name="keperluan"
+                          placeholder="Jelaskan keperluan janji temu"
+                          required></textarea>
             </div>
 
-
-            <!-- DOKUMEN -->
             <div class="form-group">
-
-                <label>
-                    Upload Dokumen Pendukung
-                </label>
-
-                <input
-                    type="file"
-                    id="dokumen"
-                    accept=".jpg,.jpeg,.png,.pdf">
-
+                <label>Upload Dokumen Pendukung</label>
+                <input type="file"
+                       name="dokumen"
+                       accept=".jpg,.jpeg,.png,.pdf">
             </div>
 
-
-            <!-- BUTTON -->
-            <button
-                type="submit"
-                class="btn">
-
+            <button type="submit">
                 AJUKAN JANJI TEMU
-
             </button>
 
         </form>
 
-
-        <!-- HASIL -->
-        <div
-            class="result"
-            id="result">
-
-            <h3>✓ Pengajuan Berhasil</h3>
-
-            <p>
-                Terima kasih. Pengajuan janji temu Anda telah
-                berhasil dibuat.
-            </p>
-
-            <p>
-                Nomor Booking:
-            </p>
-
-            <div
-                class="booking"
-                id="booking">
-            </div>
-
-            <hr>
-
-            <p>
-                <b>Nama:</b>
-                <span id="hasilNama"></span>
-            </p>
-
-            <p>
-                <b>Layanan:</b>
-                <span id="hasilLayanan"></span>
-            </p>
-
-            <p>
-                <b>Tanggal:</b>
-                <span id="hasilTanggal"></span>
-            </p>
-
-            <p>
-                <b>Jam:</b>
-                <span id="hasilJam"></span>
-            </p>
-
-            <p>
-                Status:
-                <b style="color:#d97706;">
-                    Menunggu Konfirmasi
-                </b>
-            </p>
-
+        <div class="footer">
+            Kelurahan Gudang Kecamatan Bogor Tengah
+            <br>
+            Sistem Janji Temu Pelayanan
         </div>
 
     </div>
 
 </div>
 
-
-<!-- FOOTER -->
-<div class="footer">
-
-    © 2026 Kelurahan Gudang Kecamatan Bogor Tengah
-    <br>
-    Sistem Janji Temu Pelayanan
-
-</div>
-
-
 <script>
 
-/* =====================================
-   TANGGAL MINIMAL = HARI INI
-===================================== */
+    // Membatasi tanggal agar tidak bisa memilih tanggal yang sudah lewat
+    const tanggal = document.getElementById("tanggal");
 
-const tanggalInput =
-    document.getElementById("tanggal");
+    const hariIni = new Date();
+    const tahun = hariIni.getFullYear();
+    const bulan = String(hariIni.getMonth() + 1).padStart(2, "0");
+    const hari = String(hariIni.getDate()).padStart(2, "0");
 
-const sekarang = new Date();
-
-const tahun =
-    sekarang.getFullYear();
-
-const bulan =
-    String(sekarang.getMonth() + 1)
-    .padStart(2, "0");
-
-const hari =
-    String(sekarang.getDate())
-    .padStart(2, "0");
-
-tanggalInput.min =
-    tahun + "-" + bulan + "-" + hari;
+    tanggal.min = `${tahun}-${bulan}-${hari}`;
 
 
-/* =====================================
-   FORM SUBMIT
-===================================== */
+    // Saat form dikirim
+    document.getElementById("janjiTemuForm").addEventListener("submit", function(event) {
 
-document
-.getElementById("janjiTemuForm")
-.addEventListener("submit", function(e) {
-
-    e.preventDefault();
-
-
-    /* DATA */
-
-    const nama =
-        document.getElementById("nama").value;
-
-    const nik =
-        document.getElementById("nik").value;
-
-    const hp =
-        document.getElementById("hp").value;
-
-    const layanan =
-        document.getElementById("layanan").value;
-
-    const tanggal =
-        document.getElementById("tanggal").value;
-
-    const jam =
-        document.getElementById("jam").value;
-
-
-    /* VALIDASI NIK */
-
-    if (nik.length !== 16) {
+        event.preventDefault();
 
         alert(
-            "NIK harus terdiri dari 16 digit."
+            "Pengajuan Janji Temu berhasil dikirim.\n\n" +
+            "Silakan menunggu konfirmasi dari petugas."
         );
 
-        return;
-
-    }
-
-
-    /* NOMOR BOOKING */
-
-    const nomor =
-        Math.floor(
-            1000 + Math.random() * 9000
-        );
-
-    const booking =
-        "JT-" +
-        tahun +
-        bulan +
-        hari +
-        "-" +
-        nomor;
-
-
-    /* TAMPILKAN HASIL */
-
-    document.getElementById("booking")
-        .textContent = booking;
-
-    document.getElementById("hasilNama")
-        .textContent = nama;
-
-    document.getElementById("hasilLayanan")
-        .textContent = layanan;
-
-    document.getElementById("hasilTanggal")
-        .textContent = tanggal;
-
-    document.getElementById("hasilJam")
-        .textContent = jam;
-
-
-    document.getElementById("result")
-        .style.display = "block";
-
-
-    /* SCROLL KE HASIL */
-
-    document.getElementById("result")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
-
-});
+    });
 
 </script>
 

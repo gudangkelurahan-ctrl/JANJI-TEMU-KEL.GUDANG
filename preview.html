@@ -1,333 +1,664 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Janji Temu - Kelurahan Gudang</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<title>Dashboard Admin - Janji Temu</title>
 
-        body {
-            margin: 0;
-            background: #f2f6f9;
-            color: #333;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
-        }
+body {
+    margin: 0;
+    background: #f1f5f9;
+    color: #1e293b;
+}
 
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    width: 240px;
+    height: 100vh;
+    background: #087f5b;
+    color: white;
+    padding: 25px 15px;
+}
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 35px;
+}
 
-        .header h1 {
-            margin: 0;
-            color: #126b9e;
-            font-size: 28px;
-        }
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 13px 15px;
+    margin-bottom: 8px;
+    border-radius: 7px;
+}
 
-        .header h2 {
-            margin: 8px 0;
-            font-size: 20px;
-            color: #333;
-        }
+.sidebar a:hover,
+.sidebar a.active {
+    background: rgba(255,255,255,0.18);
+}
 
-        .header p {
-            color: #777;
-            margin-bottom: 0;
-        }
+/* MAIN */
+.main {
+    margin-left: 240px;
+    padding: 30px;
+}
 
-        .form-group {
-            margin-bottom: 18px;
-        }
+/* HEADER */
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
 
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-weight: bold;
-        }
+.top h1 {
+    margin: 0;
+}
 
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-        }
+.admin {
+    background: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
 
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #126b9e;
-        }
+/* STATISTIK */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+.stat {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
 
-        .row {
-            display: flex;
-            gap: 15px;
-        }
+.stat h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
 
-        .row .form-group {
-            flex: 1;
-        }
+.stat p {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px 0 0;
+    color: #087f5b;
+}
 
-        .required {
-            color: red;
-        }
+/* CARD */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
 
-        .info {
-            background: #eef7fc;
-            border-left: 4px solid #126b9e;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
+.card h2 {
+    margin-top: 0;
+}
 
-        button {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: #126b9e;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+/* FILTER */
+.filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
 
-        button:hover {
-            background: #0d557e;
-        }
+.filter input,
+.filter select {
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+}
 
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #777;
-        }
+/* TABLE */
+.table-wrapper {
+    overflow-x: auto;
+}
 
-        @media (max-width: 600px) {
-            .container {
-                margin: 10px auto;
-                padding: 10px;
-            }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-            .card {
-                padding: 20px;
-            }
+th,
+td {
+    padding: 13px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
 
-            .row {
-                flex-direction: column;
-                gap: 0;
-            }
-        }
-    </style>
+th {
+    background: #f8fafc;
+}
+
+.status {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.menunggu {
+    background: #fff3bf;
+    color: #b7791f;
+}
+
+.disetujui {
+    background: #d3f9d8;
+    color: #2b8a3e;
+}
+
+.selesai {
+    background: #d0ebff;
+    color: #1864ab;
+}
+
+.ditolak {
+    background: #ffe3e3;
+    color: #c92a2a;
+}
+
+/* BUTTON */
+.btn {
+    border: none;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    margin: 2px;
+}
+
+.btn-detail {
+    background: #1971c2;
+}
+
+.btn-setuju {
+    background: #2b8a3e;
+}
+
+.btn-tolak {
+    background: #c92a2a;
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .main {
+        margin-left: 200px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .filter {
+        flex-direction: column;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- SIDEBAR -->
+<div class="sidebar">
 
+    <h2>ADMIN</h2>
+
+    <a href="#" class="active">
+        📊 Dashboard
+    </a>
+
+    <a href="#">
+        📅 Janji Temu
+    </a>
+
+    <a href="#">
+        👥 Data Pemohon
+    </a>
+
+    <a href="#">
+        📋 Laporan
+    </a>
+
+    <a href="#">
+        ⚙ Pengaturan
+    </a>
+
+</div>
+
+
+<!-- MAIN -->
+<div class="main">
+
+    <div class="top">
+
+        <div>
+            <h1>Dashboard Admin</h1>
+            <p>Informasi Janji Temu Pelayanan</p>
+        </div>
+
+        <div class="admin">
+            👤 Administrator
+        </div>
+
+    </div>
+
+
+    <!-- STATISTIK -->
+    <div class="stats">
+
+        <div class="stat">
+            <h3>Total Janji Temu</h3>
+            <p id="total">0</p>
+        </div>
+
+        <div class="stat">
+            <h3>Menunggu Konfirmasi</h3>
+            <p id="menunggu">0</p>
+        </div>
+
+        <div class="stat">
+            <h3>Disetujui</h3>
+            <p id="disetujui">0</p>
+        </div>
+
+        <div class="stat">
+            <h3>Selesai</h3>
+            <p id="selesai">0</p>
+        </div>
+
+    </div>
+
+
+    <!-- DATA JANJI TEMU -->
     <div class="card">
 
-        <div class="header">
-            <h1>JANJI TEMU</h1>
-            <h2>KELURAHAN GUDANG</h2>
-            <p>Kecamatan Bogor Tengah</p>
+        <h2>Daftar Janji Temu</h2>
+
+        <div class="filter">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Cari nama / NIK / booking..."
+                onkeyup="filterData()">
+
+            <select
+                id="statusFilter"
+                onchange="filterData()">
+
+                <option value="">
+                    Semua Status
+                </option>
+
+                <option value="Menunggu">
+                    Menunggu
+                </option>
+
+                <option value="Disetujui">
+                    Disetujui
+                </option>
+
+                <option value="Selesai">
+                    Selesai
+                </option>
+
+                <option value="Ditolak">
+                    Ditolak
+                </option>
+
+            </select>
+
         </div>
 
-        <div class="info">
-            Silakan isi formulir berikut untuk mengajukan janji temu
-            dengan petugas pelayanan Kelurahan Gudang.
-        </div>
 
-        <form id="janjiTemuForm">
+        <div class="table-wrapper">
 
-            <div class="form-group">
-                <label>Nama Pemohon <span class="required">*</span></label>
-                <input type="text" name="nama" placeholder="Masukkan nama lengkap" required>
-            </div>
+            <table>
 
-            <div class="form-group">
-                <label>NIK <span class="required">*</span></label>
-                <input type="text"
-                       name="nik"
-                       placeholder="Masukkan NIK"
-                       maxlength="16"
-                       inputmode="numeric"
-                       required>
-            </div>
+                <thead>
 
-            <div class="form-group">
-                <label>No. Handphone <span class="required">*</span></label>
-                <input type="tel"
-                       name="no_hp"
-                       placeholder="Contoh: 081234567890"
-                       required>
-            </div>
+                    <tr>
+                        <th>No</th>
+                        <th>Booking</th>
+                        <th>Nama</th>
+                        <th>NIK</th>
+                        <th>Layanan</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
 
-            <div class="form-group">
-                <label>Alamat</label>
-                <textarea name="alamat"
-                          placeholder="Masukkan alamat lengkap"></textarea>
-            </div>
+                </thead>
 
-            <div class="form-group">
-                <label>Layanan yang Dituju <span class="required">*</span></label>
+                <tbody id="dataTable">
 
-                <select name="layanan" required>
-                    <option value="">-- Pilih Layanan --</option>
-                    <option value="Administrasi Kependudukan">
-                        Administrasi Kependudukan
-                    </option>
-                    <option value="Surat Keterangan">
-                        Surat Keterangan
-                    </option>
-                    <option value="Ahli Waris">
-                        Ahli Waris
-                    </option>
-                    <option value="Domisili">
-                        Surat Keterangan Domisili
-                    </option>
-                    <option value="Pelayanan Umum">
-                        Pelayanan Umum
-                    </option>
-                    <option value="Konsultasi">
-                        Konsultasi
-                    </option>
-                    <option value="Lainnya">
-                        Lainnya
-                    </option>
-                </select>
-            </div>
+                </tbody>
 
-            <div class="row">
+            </table>
 
-                <div class="form-group">
-                    <label>Tanggal Janji Temu <span class="required">*</span></label>
-                    <input type="date"
-                           id="tanggal"
-                           name="tanggal"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Jam <span class="required">*</span></label>
-
-                    <select name="jam" required>
-                        <option value="">-- Pilih Jam --</option>
-                        <option value="08:00">08:00</option>
-                        <option value="08:30">08:30</option>
-                        <option value="09:00">09:00</option>
-                        <option value="09:30">09:30</option>
-                        <option value="10:00">10:00</option>
-                        <option value="10:30">10:30</option>
-                        <option value="11:00">11:00</option>
-                        <option value="11:30">11:30</option>
-                        <option value="13:00">13:00</option>
-                        <option value="13:30">13:30</option>
-                        <option value="14:00">14:00</option>
-                        <option value="14:30">14:30</option>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="form-group">
-                <label>Nama Petugas yang Dituju</label>
-
-                <select name="petugas">
-                    <option value="">-- Pilih Petugas --</option>
-                    <option value="Petugas Pelayanan">
-                        Petugas Pelayanan
-                    </option>
-                    <option value="Sekretaris Kelurahan">
-                        Sekretaris Kelurahan
-                    </option>
-                    <option value="Lurah">
-                        Lurah
-                    </option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Keperluan / Catatan <span class="required">*</span></label>
-
-                <textarea name="keperluan"
-                          placeholder="Jelaskan keperluan janji temu"
-                          required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Upload Dokumen Pendukung</label>
-                <input type="file"
-                       name="dokumen"
-                       accept=".jpg,.jpeg,.png,.pdf">
-            </div>
-
-            <button type="submit">
-                AJUKAN JANJI TEMU
-            </button>
-
-        </form>
-
-        <div class="footer">
-            Kelurahan Gudang Kecamatan Bogor Tengah
-            <br>
-            Sistem Janji Temu Pelayanan
         </div>
 
     </div>
 
 </div>
 
+
 <script>
 
-    // Membatasi tanggal agar tidak bisa memilih tanggal yang sudah lewat
-    const tanggal = document.getElementById("tanggal");
+/* DATA CONTOH */
 
-    const hariIni = new Date();
-    const tahun = hariIni.getFullYear();
-    const bulan = String(hariIni.getMonth() + 1).padStart(2, "0");
-    const hari = String(hariIni.getDate()).padStart(2, "0");
+let data = [
 
-    tanggal.min = `${tahun}-${bulan}-${hari}`;
+    {
+        booking: "JT-20261008-1001",
+        nama: "Budi Santoso",
+        nik: "3271010101010001",
+        layanan: "Administrasi Kependudukan",
+        tanggal: "2026-10-09",
+        jam: "08:00",
+        status: "Menunggu"
+    },
+
+    {
+        booking: "JT-20261008-1002",
+        nama: "Siti Aminah",
+        nik: "3271010101010002",
+        layanan: "Surat Keterangan",
+        tanggal: "2026-10-09",
+        jam: "09:00",
+        status: "Disetujui"
+    },
+
+    {
+        booking: "JT-20261008-1003",
+        nama: "Dedi Saputra",
+        nik: "3271010101010003",
+        layanan: "Ahli Waris",
+        tanggal: "2026-10-10",
+        jam: "10:00",
+        status: "Selesai"
+    },
+
+    {
+        booking: "JT-20261008-1004",
+        nama: "Rina Marlina",
+        nik: "3271010101010004",
+        layanan: "Konsultasi Pelayanan",
+        tanggal: "2026-10-10",
+        jam: "13:00",
+        status: "Menunggu"
+    }
+
+];
 
 
-    // Saat form dikirim
-    document.getElementById("janjiTemuForm").addEventListener("submit", function(event) {
+/* TAMPILKAN DATA */
 
-        event.preventDefault();
+function tampilkanData(dataTampil = data) {
 
-        alert(
-            "Pengajuan Janji Temu berhasil dikirim.\n\n" +
-            "Silakan menunggu konfirmasi dari petugas."
-        );
+    const table =
+        document.getElementById("dataTable");
+
+    table.innerHTML = "";
+
+    dataTampil.forEach((item, index) => {
+
+        let statusClass =
+            item.status.toLowerCase();
+
+        let row = `
+
+        <tr>
+
+            <td>${index + 1}</td>
+
+            <td>
+                <b>${item.booking}</b>
+            </td>
+
+            <td>${item.nama}</td>
+
+            <td>${item.nik}</td>
+
+            <td>${item.layanan}</td>
+
+            <td>${item.tanggal}</td>
+
+            <td>${item.jam}</td>
+
+            <td>
+                <span class="status ${statusClass}">
+                    ${item.status}
+                </span>
+            </td>
+
+            <td>
+
+                <button
+                    class="btn btn-detail"
+                    onclick="detail('${item.booking}')">
+                    Detail
+                </button>
+
+                ${
+                    item.status === "Menunggu"
+                    ?
+                    `
+                    <button
+                        class="btn btn-setuju"
+                        onclick="setujui('${item.booking}')">
+                        Setuju
+                    </button>
+
+                    <button
+                        class="btn btn-tolak"
+                        onclick="tolak('${item.booking}')">
+                        Tolak
+                    </button>
+                    `
+                    :
+                    ""
+                }
+
+            </td>
+
+        </tr>
+
+        `;
+
+        table.innerHTML += row;
 
     });
+
+    updateStatistik();
+
+}
+
+
+/* STATISTIK */
+
+function updateStatistik() {
+
+    document.getElementById("total")
+        .textContent = data.length;
+
+    document.getElementById("menunggu")
+        .textContent =
+        data.filter(
+            x => x.status === "Menunggu"
+        ).length;
+
+    document.getElementById("disetujui")
+        .textContent =
+        data.filter(
+            x => x.status === "Disetujui"
+        ).length;
+
+    document.getElementById("selesai")
+        .textContent =
+        data.filter(
+            x => x.status === "Selesai"
+        ).length;
+}
+
+
+/* DETAIL */
+
+function detail(booking) {
+
+    const item =
+        data.find(
+            x => x.booking === booking
+        );
+
+    alert(
+        "DETAIL JANJI TEMU\n\n" +
+
+        "Nomor Booking: " +
+        item.booking +
+
+        "\nNama: " +
+        item.nama +
+
+        "\nNIK: " +
+        item.nik +
+
+        "\nLayanan: " +
+        item.layanan +
+
+        "\nTanggal: " +
+        item.tanggal +
+
+        "\nJam: " +
+        item.jam +
+
+        "\nStatus: " +
+        item.status
+    );
+
+}
+
+
+/* SETUJUI */
+
+function setujui(booking) {
+
+    const item =
+        data.find(
+            x => x.booking === booking
+        );
+
+    item.status = "Disetujui";
+
+    tampilkanData();
+
+}
+
+
+/* TOLAK */
+
+function tolak(booking) {
+
+    const item =
+        data.find(
+            x => x.booking === booking
+        );
+
+    item.status = "Ditolak";
+
+    tampilkanData();
+
+}
+
+
+/* PENCARIAN */
+
+function filterData() {
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value;
+
+    const hasil =
+        data.filter(item => {
+
+            const cocokSearch =
+                item.nama.toLowerCase()
+                .includes(search) ||
+
+                item.nik.includes(search) ||
+
+                item.booking.toLowerCase()
+                .includes(search);
+
+            const cocokStatus =
+                status === "" ||
+                item.status === status;
+
+            return cocokSearch &&
+                   cocokStatus;
+
+        });
+
+    tampilkanData(hasil);
+
+}
+
+
+/* JALANKAN */
+
+tampilkanData();
 
 </script>
 
